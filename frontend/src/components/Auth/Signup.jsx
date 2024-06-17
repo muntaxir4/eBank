@@ -1,19 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import Authenticate from "../../Authenticate.js";
 import { loginState } from "../../store/atoms";
 
 import "./auth.css";
 
 function Signup() {
-  const [username, setUsername] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const setLoginState = useSetRecoilState(loginState);
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(loginState);
 
   const navigate = useNavigate();
+
+  //Redirect to dashboard if already logged in
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/dashboard");
+    }
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -23,7 +31,7 @@ function Signup() {
       return;
     }
     localStorage.setItem("token", data.token);
-    setLoginState(true);
+    setIsLoggedIn(true);
     setTimeout(() => navigate("/dashboard"), 1000);
   }
 
@@ -31,18 +39,34 @@ function Signup() {
     <>
       <div className="flex h-full justify-center">
         <div className="min-h-64 w-5/6 self-center rounded-md border-2 border-black bg-white shadow-lg sm:w-1/3">
-          <form className="m-4 flex flex-col justify-around gap-3">
+          <form
+            className="m-4 flex flex-col justify-around gap-3"
+            onSubmit={handleSubmit}
+          >
             <div>
-              <label htmlFor="username" className="text-sm">
-                Username
+              <label htmlFor="firstName" className="text-sm">
+                firstName
               </label>
               <input
                 type="text"
-                name="username"
-                id="username"
+                name="firstName"
+                id="firstName"
                 className="w-full rounded-md border border-black bg-slate-100 p-1 px-2 text-sm"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+            </div>
+            <div>
+              <label htmlFor="lastName" className="text-sm">
+                lastName
+              </label>
+              <input
+                type="text"
+                name="lastName"
+                id="lastName"
+                className="w-full rounded-md border border-black bg-slate-100 p-1 px-2 text-sm"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
               />
             </div>
             <div>

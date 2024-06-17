@@ -1,4 +1,5 @@
 import axios from "axios";
+import { SERVER_URL } from "../../.moon.config.mjs";
 
 async function Authenticate({ formEvent, type }) {
   const body = new URLSearchParams();
@@ -10,15 +11,11 @@ async function Authenticate({ formEvent, type }) {
   }
   console.log(body, formEvent);
   try {
-    const response = await axios.post(
-      `http://localhost:3000/auth/${type}`,
-      body,
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }
-    );
+    const response = await axios.post(`${SERVER_URL}/auth/${type}`, body, {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    });
     console.log("Response", response);
 
     return response.data;

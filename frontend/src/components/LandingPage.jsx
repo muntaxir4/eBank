@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 function LandingPage() {
   const [isLoggedIn, setLoggedIn] = useRecoilState(loginState);
-  console.log("logged", isLoggedIn);
   function handleLogout() {
     localStorage.removeItem("token");
     setLoggedIn(false);

@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import Authenticate from "../../Authenticate.js";
 import { loginState } from "../../store/atoms";
 
@@ -10,8 +10,15 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const setLoginState = useSetRecoilState(loginState);
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(loginState);
   const navigate = useNavigate();
+
+  //Redirect to dashboard if already logged in
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/dashboard");
+    }
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -21,7 +28,7 @@ function Login() {
       return;
     }
     localStorage.setItem("token", data.token);
-    setLoginState(true);
+    setIsLoggedIn(true);
     setTimeout(() => navigate("/dashboard"), 1000);
   }
 

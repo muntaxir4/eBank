@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SearchBox from "./SearchBox";
 import { useRecoilValue } from "recoil";
-import { loginState } from "../store/atoms";
+import { loginState } from "../../store/atoms";
+
+import { SERVER_URL } from "../../../../.moon.config.mjs";
+import DashboardOptions from "./DashboardOptions";
 
 async function getUserDetails() {
   const token = localStorage.getItem("token");
@@ -11,7 +13,7 @@ async function getUserDetails() {
     return { hasError: true };
   }
   try {
-    const response = await axios.get("http://localhost:3000/user/", {
+    const response = await axios.get(`${SERVER_URL}/user/`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -45,13 +47,13 @@ function Dashboard() {
   return (
     <div className="p-3">
       <h1 className="text-2xl">
-        Welcome {userDetails.firstName} {userDetails.lastName}
+        Welcome,{" "}
+        <span className="font-semibold">
+          {userDetails.firstName} {userDetails.lastName}
+        </span>
       </h1>
-      <h2 className="text-xl">Balance: Rs {userDetails.balance}</h2>
-      <button type="button" onClick={() => navigate("/")}>
-        Home
-      </button>
-      <SearchBox />
+      <h2 className="text-xl font-medium">Balance: Rs {userDetails.balance}</h2>
+      <DashboardOptions />
     </div>
   );
 }
