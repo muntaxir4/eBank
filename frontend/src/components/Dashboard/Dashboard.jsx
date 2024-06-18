@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { loginState } from "../../store/atoms";
 
-import { SERVER_URL } from "../../../../.moon.config.mjs";
+import { SERVER_URL } from "../../.././.moon.config.js";
 import DashboardOptions from "./DashboardOptions";
 
 async function getUserDetails() {

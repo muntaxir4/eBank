@@ -1,4 +1,4 @@
-import { SERVER_URL } from "../../.moon.config.mjs";
+import { SERVER_URL } from ".././.moon.config.js";
 import axios from "axios";
 
 async function sendMoney(to, amount) {

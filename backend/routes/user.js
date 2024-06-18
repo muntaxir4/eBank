@@ -36,7 +36,6 @@ router.get("/transactions", isAuthenticated, async (req, res) => {
   const sent = [],
     received = [];
   for (const transaction of transactions) {
-    console.log(transaction);
     if (transaction.from == req.userId) {
       if (!idToName[transaction.to]) {
         const { firstName, lastName } = await User.findById(transaction.to, {

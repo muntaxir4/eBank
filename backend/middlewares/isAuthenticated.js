@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "../../.moon.config.mjs";
+import { JWT_SECRET } from ".././.moon.config.js";
 
 function isAuthenticated(req, res, next) {
   const authorization = req.headers.authorization;

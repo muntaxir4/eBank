@@ -1,19 +1,12 @@
 import { Router, urlencoded } from "express";
 import zod from "zod";
 import jwt from "jsonwebtoken";
-import mongoose from "mongoose";
 
-import {
-  MONGO_DB_URL,
-  MONGO_DB_COLLECTION,
-  JWT_SECRET,
-} from "../../.moon.config.mjs";
+import { JWT_SECRET } from ".././.moon.config.js";
 import { User, Account } from "../database/Schema.js";
 
 const router = Router();
 router.use(urlencoded({ extended: false }));
-
-mongoose.connect(MONGO_DB_URL + "/" + MONGO_DB_COLLECTION);
 
 const userSignupSchema = zod.object({
   firstName: zod.string().min(1),

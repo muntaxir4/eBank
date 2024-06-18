@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-import { SERVER_URL } from "../../../../.moon.config.mjs";
+import { SERVER_URL } from "../../.././.moon.config.js";
 import MiniUserCard from "./MiniUserCard";
 
 function useDebounce(searchTerm, delay) {

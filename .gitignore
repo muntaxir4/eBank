@@ -1,4 +1,6 @@
 .moon.config.mjs
+.env
+.vercel
 # Logs
 logs
 *.log

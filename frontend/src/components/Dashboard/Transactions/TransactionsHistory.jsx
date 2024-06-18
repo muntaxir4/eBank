@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 import TxHistoryCard from "./TxHistoryCard";
-import { SERVER_URL } from "../../../../../.moon.config.mjs";
+import { SERVER_URL } from "../../../.././.moon.config.js";
 
 async function getTransactions() {
   const token = localStorage.getItem("token");

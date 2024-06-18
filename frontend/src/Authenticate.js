@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SERVER_URL } from "../../.moon.config.mjs";
+import { SERVER_URL } from ".././.moon.config.js";
 
 async function Authenticate({ formEvent, type }) {
   const body = new URLSearchParams();
