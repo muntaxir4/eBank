@@ -42,15 +42,21 @@ function Dashboard() {
     return <h1>Loading...</h1>;
   }
   return (
-    <div className="p-3">
-      <h1 className="text-2xl">
-        Welcome,{" "}
-        <span className="font-semibold">
-          {userDetails.firstName} {userDetails.lastName}
-        </span>
-      </h1>
-      <h2 className="text-xl font-medium">Balance: Rs {userDetails.balance}</h2>
-      <DashboardOptions />
+    <div className="p-3 flex flex-col gap-32">
+      <div>
+        <h1 className="text-2xl">
+          Welcome,{" "}
+          <span className="font-semibold">
+            {userDetails.firstName} {userDetails.lastName}
+          </span>
+        </h1>
+        <h2 className="text-xl font-medium">
+          Balance: Rs {userDetails.balance}
+        </h2>
+      </div>
+      <div className="">
+        <DashboardOptions />
+      </div>
     </div>
   );
 }

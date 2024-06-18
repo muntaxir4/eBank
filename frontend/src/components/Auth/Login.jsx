@@ -4,14 +4,16 @@ import { useRecoilState } from "recoil";
 import Authenticate from "../../Authenticate.js";
 import { loginState } from "../../store/atoms";
 
+import { useToast } from "@/components/ui/use-toast";
+
 import "./auth.css";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(loginState);
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   //Redirect to dashboard if already logged in
   useEffect(() => {
@@ -24,11 +26,16 @@ function Login() {
     e.preventDefault();
     const data = await Authenticate({ formEvent: e, type: "login" });
     if (data.error) {
-      setError(data.error);
-      return;
+      return toast({
+        variant: "destructive",
+        description: data.error,
+      });
     }
     localStorage.setItem("token", data.token);
     setIsLoggedIn(true);
+    toast({
+      description: "Logged in successfully. Redirecting you to Dashboard",
+    });
     setTimeout(() => navigate("/dashboard"), 1000);
   }
 
@@ -77,7 +84,6 @@ function Login() {
           </form>
         </div>
       </div>
-      {error && <div className="text-center text-red-500">{error}</div>}
       <footer className="text-center">Component created by @muntaxir4</footer>
     </>
   );

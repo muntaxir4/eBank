@@ -40,11 +40,11 @@ function TransactionHistory() {
           onClick={() => setOption(1)}
           className={option ? "border-b border-black" : ""}
         >
-          Recieved
+          Received
         </button>
       </div>
       <TxHistoryCard
-        data={option ? data.recieved : data.sent}
+        data={option ? data.received : data.sent}
         option={option}
       />
     </div>

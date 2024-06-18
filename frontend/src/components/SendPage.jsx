@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useSearchParams, useLocation, useNavigate } from "react-router-dom";
 
 import sendMoney from "../sendMoney";
-import userImg from "../assets/user.png";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useToast } from "@/components/ui/use-toast";
 
 function SendPage() {
   const [amount, setAmount] = useState("");
@@ -19,20 +20,23 @@ function SendPage() {
   }, []);
 
   const { balance, to } = location?.state ?? { balance: 10000 };
-
-  const [success, setSuccess] = useState({});
+  const { toast } = useToast();
 
   async function handleSend(e) {
     e.preventDefault();
     const result = await sendMoney(to, amount);
     if (result.error) {
       console.log(result.error);
-      return setSuccess({ error: "Failed to send money" });
+      return toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "Insuficient Balance",
+      });
     }
-    setSuccess({
-      message: `${amount} sent to ${toName} successfully. Redirecting you to Dashboard`,
+    toast({
+      description: `${amount} sent to ${toName} successfully. Redirecting you to Dashboard`,
     });
-    setTimeout(() => navigate("/dashboard"), 1000);
+    setTimeout(() => navigate("/dashboard"), 1500);
   }
 
   return (
@@ -43,7 +47,12 @@ function SendPage() {
             className="m-4 flex flex-col justify-around gap-3"
             onSubmit={handleSend}
           >
-            <img src={userImg} alt="" className="self-center w-2/6" />
+            <Avatar className="self-center h-16 w-16 ">
+              <AvatarFallback className="text-3xl">
+                {toName[0]}
+                {toName[toName.indexOf(" ") + 1]}
+              </AvatarFallback>
+            </Avatar>
             <div className="text-center">
               <label htmlFor="password" className="mb-7 font-semibold text-xl">
                 {toName ?? "Anonymous"}
@@ -61,7 +70,7 @@ function SendPage() {
 
             <button
               type="submit"
-              className="effect01 mt-5 w-full rounded-md border-2 border-black bg-lime-800 p-1 text-lg font-bold"
+              className="effect01 mt-5 w-full rounded-md border-2 border-black bg-cyan-600 p-1 text-lg font-bold"
               disabled={balance < amount}
             >
               <span>Send</span>
@@ -69,12 +78,6 @@ function SendPage() {
           </form>
         </div>
       </div>
-      {success.message && (
-        <p className="text-green-400 text-center">{success.message}</p>
-      )}
-      {success.error && (
-        <p className="text-red-400 text-center">{success.error}</p>
-      )}
       <footer className="text-center">Component created by @muntaxir4</footer>
     </>
   );

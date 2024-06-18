@@ -2,6 +2,7 @@ import { Link, Outlet } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { loginState } from "../store/atoms";
+import { Button } from "./ui/button";
 
 function HomeContainer() {
   const [isLoggedIn, setLoggedIn] = useRecoilState(loginState);
@@ -9,6 +10,7 @@ function HomeContainer() {
   function handleLogout() {
     localStorage.removeItem("token");
     setLoggedIn(false);
+    navigate("/");
     window.location.reload();
   }
   return (
@@ -20,24 +22,16 @@ function HomeContainer() {
 
         {isLoggedIn && window.location.pathname !== "/" && (
           <div className="flex gap-2 ">
-            <button
-              type="button"
-              className="border border-black rounded-md p-1 hover:bg-slate-200"
-              onClick={() => navigate("/")}
-            >
-              Home
-            </button>
-            <button
-              type="button"
-              className="border border-black rounded-md p-1 hover:bg-slate-200"
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
+            <Button onClick={() => navigate("/")}>Home</Button>
+            <Button variant="secondary" onClick={handleLogout}>
+              Log out
+            </Button>
           </div>
         )}
       </div>
-      <div className="h-5/6">
+      {/* <div className="flex flex-col justify-between min-h-screen mt-12">
+      </div> */}
+      <div className="h-5/6 min-h-[90%]">
         <Outlet />
       </div>
       <footer className="text-center">

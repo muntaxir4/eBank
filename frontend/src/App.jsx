@@ -8,6 +8,7 @@ import Signup from "./components/Auth/Signup";
 import Login from "./components/Auth/Login";
 import Dashboard from "./components/Dashboard/Dashboard";
 import SendPage from "./components/SendPage";
+import { Toaster } from "./components/ui/toaster";
 
 const queryClient = new QueryClient({
   staleTime: Infinity,
@@ -29,6 +30,7 @@ function App() {
                 <Route path="*" element={<h1>404 Not Found</h1>} />
               </Route>
             </Routes>
+            <Toaster />
           </RecoilRoot>
         </QueryClientProvider>
       </BrowserRouter>

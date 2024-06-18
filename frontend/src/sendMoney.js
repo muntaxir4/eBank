@@ -16,7 +16,7 @@ async function sendMoney(to, amount) {
     return response.data;
   } catch (error) {
     console.log(error);
-    return { error: "failed to send money" };
+    return { error };
   }
 }
 

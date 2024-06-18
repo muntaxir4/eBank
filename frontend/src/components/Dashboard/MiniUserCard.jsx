@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import userImg from "../../assets/user.png";
+import { Button } from "../ui/button";
+import { Avatar, AvatarFallback } from "../ui/avatar";
 
 function MiniUserCard({ firstName, lastName, _id }) {
   const navigate = useNavigate();
@@ -9,20 +11,26 @@ function MiniUserCard({ firstName, lastName, _id }) {
   }
 
   return (
-    <div className="border border-black rounded  flex justify-between m-2">
+    <div className="border  shadow-sm rounded  flex justify-between m-3">
       <div className="flex m-2 gap-2">
-        <img src={userImg} alt="default pic" className="h-8 self-center" />
-        <h3 className="self-center">
+        <Avatar>
+          <AvatarFallback>
+            {firstName[0]}
+            {lastName[0]}
+          </AvatarFallback>
+        </Avatar>
+        {/* <img src={userImg} alt="default pic" className="h-8 self-center" /> */}
+        <h3 className="self-center ml-2">
           {firstName} {lastName}
         </h3>
       </div>
-      <button
-        type="button"
-        className="border border-black rounded-md hover:bg-slate-200 m-2 p-1 self-center"
+      <Button
+        variant="secondary"
+        className="self-center m-1 h-[70%] px-2"
         onClick={handleSendPage}
       >
         Send
-      </button>
+      </Button>
     </div>
   );
 }

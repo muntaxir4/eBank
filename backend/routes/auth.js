@@ -54,7 +54,7 @@ const userLoginSchema = zod.object({
 });
 
 router.post("/login", async (req, res) => {
-  console.log("Login request", req.body);
+  // console.log("Login request", req.body);
   try {
     const { email, password } = userLoginSchema.parse(req.body);
     try {
@@ -76,7 +76,7 @@ router.post("/login", async (req, res) => {
         .json({ message: "User Logged in successfully", token });
     } catch (error) {
       console.log("Login failed", error);
-      return res.status(500).json({ error: "Server Failed" });
+      return res.status(500).json({ error: "User not found" });
     }
   } catch (error) {
     console.log("Zod failed at Log in", error);

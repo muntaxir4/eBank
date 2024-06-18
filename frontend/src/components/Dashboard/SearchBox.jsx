@@ -5,6 +5,8 @@ import axios from "axios";
 import { SERVER_URL } from "../../.././.moon.config.js";
 import MiniUserCard from "./MiniUserCard";
 
+import { Command, CommandList, CommandInput } from "../ui/command.jsx";
+
 function useDebounce(searchTerm, delay) {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
   useEffect(() => {
@@ -38,25 +40,25 @@ function SearchBox() {
 
   return (
     <div className="m-2 flex flex-col">
-      <input
-        type="text"
-        name=""
-        id=""
-        className=" w-full border border-black rounded-md p-1 self-center"
-        onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="Search Users"
-      />
-      {isPending && <p>Loading...</p>}
-      {!isPending && (
-        <ul className="m-2 max-h-2/5 overflow-h-scroll w-full self-center">
-          {data.users.map((user, index) => (
-            <li key={index}>
-              <MiniUserCard {...user} />
-            </li>
-          ))}
-          {data.users.length === 0 && <p>No users found</p>}
-        </ul>
-      )}
+      <Command className="rounded-lg border shadow-md">
+        <CommandInput
+          placeholder="Search a user"
+          onChangeCapture={(e) => setSearchTerm(e.target.value)}
+        />
+        <CommandList className="p-2 ml-0">
+          {isPending && <p>Loading...</p>}
+          {!isPending && (
+            <ul>
+              {data.users.map((user, index) => (
+                <li key={index}>
+                  <MiniUserCard {...user} />
+                </li>
+              ))}
+              {data.users.length === 0 && <p>No users found</p>}
+            </ul>
+          )}
+        </CommandList>
+      </Command>
     </div>
   );
 }
