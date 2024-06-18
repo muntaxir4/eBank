@@ -1,8 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { loginState } from "../../store/atoms";
 
 import { SERVER_URL } from "../../.././.moon.config.js";
 import DashboardOptions from "./DashboardOptions";
@@ -29,7 +27,6 @@ async function getUserDetails() {
 function Dashboard() {
   const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState({});
-  console.log(useRecoilValue(loginState));
   useEffect(() => {
     async function onMount() {
       const data = await getUserDetails();

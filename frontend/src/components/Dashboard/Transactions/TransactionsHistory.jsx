@@ -24,7 +24,6 @@ function TransactionHistory() {
 
   if (isPending) return <p>Loading...</p>;
   else if (error) return <p>Error: {error.message}</p>;
-  console.log(data);
 
   return (
     <div className="flex flex-col m-2">

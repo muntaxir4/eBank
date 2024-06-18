@@ -1,7 +1,7 @@
 function TxHistoryCard({ data, option }) {
   return (
     <div>
-      {data ? (
+      {data && data.length ? (
         data.map((transaction, index) => (
           <div
             key={index}
@@ -14,6 +14,17 @@ function TxHistoryCard({ data, option }) {
               <p>To: {transaction.to}</p>
             )}
             <p>Txid: {transaction.txid}</p>
+            <p>
+              Time:{" "}
+              {new Date(transaction.date).toLocaleDateString("en-IN", {
+                year: "numeric", // "2021"
+                month: "numeric", // "July"
+                day: "numeric", // "19"
+                hour: "numeric", // "11"
+                minute: "numeric", // "30"
+                second: "numeric", // "30"
+              })}
+            </p>
           </div>
         ))
       ) : (

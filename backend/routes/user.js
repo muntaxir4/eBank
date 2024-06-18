@@ -13,7 +13,6 @@ router.get("/", isAuthenticated, async (req, res) => {
 
 router.get("/users/bulk", isAuthenticated, async (req, res) => {
   const filter = req.query.filter ?? "";
-  console.log(filter);
   const users = await User.find(
     {
       $or: [
@@ -70,7 +69,7 @@ router.get("/transactions", isAuthenticated, async (req, res) => {
 });
 
 router.post("/transfer", isAuthenticated, async (req, res) => {
-  console.log(req.query);
+  console.log("Transfer initiated", req.query);
   try {
     const from = req.userId;
     const to = zod.string().parse(req.query.to);

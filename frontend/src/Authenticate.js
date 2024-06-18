@@ -9,14 +9,12 @@ async function Authenticate({ formEvent, type }) {
     body.append("firstName", formEvent.target.firstName.value);
     body.append("lastName", formEvent.target.lastName.value);
   }
-  console.log(body, formEvent);
   try {
     const response = await axios.post(`${SERVER_URL}/auth/${type}`, body, {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
     });
-    console.log("Response", response);
 
     return response.data;
   } catch (error) {

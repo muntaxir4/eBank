@@ -20,8 +20,6 @@ function SendPage() {
 
   const { balance, to } = location?.state ?? { balance: 10000 };
 
-  console.log(toName, to, balance, amount);
-
   const [success, setSuccess] = useState({});
 
   async function handleSend(e) {
