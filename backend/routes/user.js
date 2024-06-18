@@ -7,6 +7,9 @@ import isAuthenticated from "../middlewares/isAuthenticated.js";
 const router = Router();
 
 router.get("/", isAuthenticated, async (req, res) => {
+  if (!req.userId || !req.name) {
+    return res.status(400).json({ error: "User not found" });
+  }
   const { balance } = await Account.findOne({ userId: req.userId });
   res.status(200).json({ name: req.name, balance });
 });

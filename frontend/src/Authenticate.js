@@ -19,7 +19,7 @@ async function Authenticate({ formEvent, type }) {
     return response.data;
   } catch (error) {
     console.log("Error", error);
-    return { error: "Invalid Credentials" };
+    return { error: error.response.data.error ?? "Invalid Credentials" };
   }
 }
 

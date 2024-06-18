@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 import { SERVER_URL } from "../../.././.moon.config.js";
 import DashboardOptions from "./DashboardOptions";
+import { useSetRecoilState } from "recoil";
+import { loginState } from "@/store/atoms.js";
 
 async function getUserDetails() {
   const token = localStorage.getItem("token");
@@ -27,10 +29,12 @@ async function getUserDetails() {
 function Dashboard() {
   const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState({});
+  const setIsLoggedIn = useSetRecoilState(loginState);
   useEffect(() => {
     async function onMount() {
       const data = await getUserDetails();
       if (data.hasError) {
+        setIsLoggedIn(false);
         navigate("/login");
       }
       setUserDetails(data);

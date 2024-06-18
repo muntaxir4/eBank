@@ -26,9 +26,15 @@ function Login() {
     e.preventDefault();
     const data = await Authenticate({ formEvent: e, type: "login" });
     if (data.error) {
+      if (data.error.name == "ZodError") {
+        return toast({
+          variant: "destructive",
+          description: "Invalid Credentials",
+        });
+      }
       return toast({
         variant: "destructive",
-        description: data.error,
+        description: JSON.stringify(data.error),
       });
     }
     localStorage.setItem("token", data.token);
@@ -52,13 +58,14 @@ function Login() {
                 E-mail
               </label>
               <input
-                type="text"
+                type="email"
                 name="email"
                 id="email"
                 className="w-full rounded-md border border-black bg-slate-100 p-1 px-2 text-sm"
                 placeholder="example@mail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
             <div>
@@ -66,18 +73,19 @@ function Login() {
                 Password
               </label>
               <input
-                type="text"
+                type="password"
                 name="password"
                 id="password"
                 className="w-full rounded-md border border-black bg-slate-100 p-1 px-2 text-sm"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
             </div>
 
             <button
               type="submit"
-              className="effect01 mt-5 w-full rounded-md border-2 border-black bg-sky-600 p-1 text-lg font-bold"
+              className="effect01 mt-5 w-full rounded-md border-2 border-black bg-slate-400 p-1 text-lg font-bold "
             >
               <span>Log In</span>
             </button>

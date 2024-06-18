@@ -25,7 +25,7 @@ function LandingPage() {
   return (
     <div className="flex flex-col m-2">
       <p className="text-center mb-8 text-2xl">
-        Send and Receive eRuppee with ease.
+        Send and Receive eRupee with ease.
       </p>
       {isLoggedIn && (
         <div className="flex justify-center gap-3">

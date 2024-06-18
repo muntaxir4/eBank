@@ -26,11 +26,22 @@ function Signup() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const data = await Authenticate({ formEvent: e, type: "signup" });
-    if (data.error) {
+    if (password.length < 5)
       return toast({
         variant: "destructive",
-        description: data.error,
+        description: "Password must be at least 5 characters",
+      });
+    const data = await Authenticate({ formEvent: e, type: "signup" });
+    if (data.error) {
+      if (data.error.name == "ZodError") {
+        return toast({
+          variant: "destructive",
+          description: "Check Input Fields again",
+        });
+      }
+      return toast({
+        variant: "destructive",
+        description: JSON.stringify(data.error),
       });
     }
     localStorage.setItem("token", data.token);
@@ -60,6 +71,7 @@ function Signup() {
                 className="w-full rounded-md border border-black bg-slate-100 p-1 px-2 text-sm"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
+                required
               />
             </div>
             <div>
@@ -73,6 +85,7 @@ function Signup() {
                 className="w-full rounded-md border border-black bg-slate-100 p-1 px-2 text-sm"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
+                required
               />
             </div>
             <div>
@@ -80,13 +93,14 @@ function Signup() {
                 E-mail
               </label>
               <input
-                type="text"
+                type="email"
                 name="email"
                 id="email"
                 className="w-full rounded-md border border-black bg-slate-100 p-1 px-2 text-sm"
                 placeholder="example@mail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
             <div>
@@ -100,12 +114,14 @@ function Signup() {
                 className="w-full rounded-md border border-black bg-slate-100 p-1 px-2 text-sm"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                placeholder="Minimum 5 characters"
+                required
               />
             </div>
 
             <button
               type="submit"
-              className="effect01 mt-5 w-full rounded-md border-2 border-black bg-green-400 p-1 text-lg font-bold"
+              className="effect01 mt-5 w-full rounded-md border-2 border-black bg-green-600 p-1 text-lg font-bold"
             >
               <span>Sign Up</span>
             </button>
