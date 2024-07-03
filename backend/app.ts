@@ -2,10 +2,10 @@ import { Router } from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 
-import { MONGO_DB_URL, MONGO_DB_COLLECTION } from "./.moon.config.js";
+import { MONGO_DB_URL, MONGO_DB_COLLECTION } from "./.moon.config";
 
-import auth from "./routes/auth.js";
-import user from "./routes/user.js";
+import auth from "./routes/auth";
+import user from "./routes/user";
 
 const root = Router();
 

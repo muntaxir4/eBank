@@ -1,9 +1,9 @@
-import { Router, urlencoded } from "express";
+import { NextFunction, Request, Response, Router, urlencoded } from "express";
 import zod from "zod";
 import jwt from "jsonwebtoken";
 
-import { JWT_SECRET } from ".././.moon.config.js";
-import { User, Account } from "../database/Schema.js";
+import { JWT_SECRET } from "../.moon.config";
+import { User, Account } from "../database/Schema";
 
 const router = Router();
 router.use(urlencoded({ extended: false }));
@@ -58,14 +58,13 @@ router.post("/login", async (req, res) => {
   try {
     const { email, password } = userLoginSchema.parse(req.body);
     try {
-      const {
-        _id: userId,
-        firstName,
-        lastName,
-      } = await User.findOne({ email, password });
-      if (!userId) {
+      const user = await User.findOne({ email, password });
+      if (!user) {
         return res.status(400).json({ error: "Invalid credentials" });
       }
+      const userId = user?._id;
+      const firstName = user?.firstName;
+      const lastName = user?.lastName;
 
       const token = jwt.sign(
         { userId, name: lastName + "-" + firstName },
@@ -84,7 +83,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.use((error, req, res, next) => {
+router.use((error: any, req: Request, res: Response, next: NextFunction) => {
   console.log("Error in auth route", error);
   res.status(500).json({ error: "Server Error" });
 });
