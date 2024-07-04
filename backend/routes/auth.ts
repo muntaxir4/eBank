@@ -3,7 +3,10 @@ import zod from "zod";
 import jwt from "jsonwebtoken";
 
 import { JWT_SECRET } from "../.moon.config";
-import { User, Account } from "../database/Schema";
+
+//importing prisma client
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 
 const router = Router();
 router.use(urlencoded({ extended: false }));
@@ -21,15 +24,18 @@ router.post("/signup", async (req, res) => {
       req.body
     );
     try {
-      const { _id: userId } = await User.create({
-        firstName,
-        lastName,
-        email,
-        password,
-      });
-      await Account.create({
-        userId,
-        balance: 100 + Math.floor(Math.random() * 10000),
+      const { id: userId } = await prisma.users.create({
+        data: {
+          firstName,
+          lastName,
+          email,
+          password,
+          accountId: {
+            create: {
+              balance: 100 + Math.floor(Math.random() * 10000),
+            },
+          },
+        },
       });
       const token = jwt.sign(
         { userId, name: lastName + "-" + firstName },
@@ -58,11 +64,16 @@ router.post("/login", async (req, res) => {
   try {
     const { email, password } = userLoginSchema.parse(req.body);
     try {
-      const user = await User.findOne({ email, password });
+      const user = await prisma.users.findFirst({
+        where: {
+          email,
+          password,
+        },
+      });
       if (!user) {
         return res.status(400).json({ error: "Invalid credentials" });
       }
-      const userId = user?._id;
+      const userId = user?.id;
       const firstName = user?.firstName;
       const lastName = user?.lastName;
 

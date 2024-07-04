@@ -1,6 +1,6 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { JWT_SECRET } from "../.moon.config";
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 
 import { AuthRequest } from "./types";
 

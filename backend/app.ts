@@ -1,19 +1,22 @@
 import { Router } from "express";
+import { PrismaClient } from "@prisma/client";
 import cors from "cors";
-import mongoose from "mongoose";
-
-import { MONGO_DB_URL, MONGO_DB_COLLECTION } from "./.moon.config";
 
 import auth from "./routes/auth";
 import user from "./routes/user";
 
 const root = Router();
+const prisma = new PrismaClient();
 
-//connect to database
-mongoose.connect(MONGO_DB_URL + "/" + MONGO_DB_COLLECTION);
-mongoose.connection.once("open", () => {
-  console.log("Connected to database");
-});
+// Explicitly connect to the database
+prisma
+  .$connect()
+  .then(() => {
+    console.log("Successfully connected to the database.");
+  })
+  .catch((error) => {
+    console.error("Error connecting to the database:", error);
+  });
 
 root.use(cors());
 

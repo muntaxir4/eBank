@@ -3,11 +3,11 @@ import userImg from "../../assets/user.png";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 
-function MiniUserCard({ firstName, lastName, _id }) {
+function MiniUserCard({ firstName, lastName, id }) {
   const navigate = useNavigate();
 
   function handleSendPage() {
-    navigate(`/send?name=${firstName}+${lastName}`, { state: { to: _id } });
+    navigate(`/send?name=${firstName}+${lastName}`, { state: { to: id } });
   }
 
   return (
