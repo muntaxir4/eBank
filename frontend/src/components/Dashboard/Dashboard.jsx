@@ -6,6 +6,7 @@ import { SERVER_URL } from "../../.././.moon.config.js";
 import DashboardOptions from "./DashboardOptions";
 import { useSetRecoilState } from "recoil";
 import { loginState } from "@/store/atoms.js";
+import Loading from "../Loading.jsx";
 
 async function getUserDetails() {
   const token = localStorage.getItem("token");
@@ -43,7 +44,7 @@ function Dashboard() {
   }, []);
 
   if (!userDetails.firstName) {
-    return <h1>Loading...</h1>;
+    return <Loading />;
   }
   return (
     <div className="p-3 flex flex-col gap-32">

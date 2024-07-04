@@ -6,6 +6,7 @@ import { loginState } from "../../store/atoms";
 import { useToast } from "@/components/ui/use-toast";
 
 import "./auth.css";
+import Loading from "../Loading.jsx";
 
 function Signup() {
   const [firstName, setFirstName] = useState("");
@@ -26,6 +27,10 @@ function Signup() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    toast({
+      description: "Signing you up.",
+      action: <Loading />,
+    });
     if (password.length < 5)
       return toast({
         variant: "destructive",
@@ -121,7 +126,7 @@ function Signup() {
 
             <button
               type="submit"
-              className="effect01 mt-5 w-full rounded-md border-2 border-black bg-green-600 p-1 text-lg font-bold"
+              className="effect01 mt-5 w-full rounded-md border-2 border-black bg-green-500 hover:bg-green-600 p-1 text-lg font-bold"
             >
               <span>Sign Up</span>
             </button>

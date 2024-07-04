@@ -4,6 +4,7 @@ import axios from "axios";
 
 import TxHistoryCard from "./TxHistoryCard";
 import { SERVER_URL } from "../../../.././.moon.config.js";
+import Loading from "../../Loading.jsx";
 
 async function getTransactions() {
   const token = localStorage.getItem("token");
@@ -22,7 +23,7 @@ function TransactionHistory() {
     queryFn: () => getTransactions(),
   });
 
-  if (isPending) return <p>Loading...</p>;
+  if (isPending) return <Loading />;
   else if (error) return <p>Error: {error.message}</p>;
 
   return (

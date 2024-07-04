@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "prisma generate && tsc -b && nodemon dist/index.js",
+    "dev": "tsc -b && nodemon dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "prisma generate && tsc -b"
   },

@@ -6,6 +6,7 @@ import { SERVER_URL } from "../../.././.moon.config.js";
 import MiniUserCard from "./MiniUserCard";
 
 import { Command, CommandList, CommandInput } from "../ui/command.jsx";
+import Loading from "../Loading.jsx";
 
 function useDebounce(searchTerm, delay) {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
@@ -46,7 +47,7 @@ function SearchBox() {
           onChangeCapture={(e) => setSearchTerm(e.target.value)}
         />
         <CommandList className="p-2 ml-0">
-          {isPending && <p>Loading...</p>}
+          {isPending && <Loading />}
           {!isPending && (
             <ul>
               {data.users.map((user, index) => (

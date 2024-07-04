@@ -5,6 +5,8 @@ import sendMoney from "../sendMoney";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/components/ui/use-toast";
 
+import Loading from "./Loading";
+
 function SendPage() {
   const [amount, setAmount] = useState("");
   const [searchParams] = useSearchParams();
@@ -24,6 +26,10 @@ function SendPage() {
 
   async function handleSend(e) {
     e.preventDefault();
+    toast({
+      description: `Sending Rs${amount}`,
+      action: <Loading />,
+    });
     const result = await sendMoney(to, amount);
     if (result.error) {
       console.log(result.error);
@@ -43,8 +49,10 @@ function SendPage() {
     <>
       <div className="flex justify-center">
         <div className="w-5/6 self-center rounded-md border-2 border-black bg-white shadow-lg sm:w-1/3">
+          <h1 className="text-2xl text-center font-bold p-4">Send Money</h1>
+          <hr className="  border" />
           <form
-            className="m-4 flex flex-col justify-around gap-3"
+            className="m-4 flex flex-col justify-around gap-3 mt-6"
             onSubmit={handleSend}
           >
             <Avatar className="self-center h-16 w-16 ">
