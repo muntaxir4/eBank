@@ -135,34 +135,43 @@ router.post("/transfer", isAuthenticated, async (req: AuthRequest, res) => {
     if (!fromUser || fromUser.balance < amount) {
       return res.status(400).json({ error: "Insufficient balance" });
     }
-    await prisma.accounts.update({
-      where: { userId: from },
-      data: {
-        balance: {
-          decrement: amount,
-        },
-      },
-    });
-    await prisma.accounts.update({
-      where: { userId: to },
-      data: {
-        balance: {
-          increment: amount,
-        },
-      },
-    });
-    const txid = await prisma.transactions.create({
-      data: {
-        from,
-        to,
-        amount,
-        date: new Date(),
-      },
-      select: {
-        id: true,
-      },
-    });
-    return res.status(200).json({ message: "Transfer successful", txid });
+    try {
+      await prisma.$transaction(async (txDb) => {
+        await txDb.accounts.update({
+          where: { userId: from },
+          data: {
+            balance: {
+              decrement: amount,
+            },
+          },
+        });
+        await txDb.accounts.update({
+          where: { userId: to },
+          data: {
+            balance: {
+              increment: amount,
+            },
+          },
+        });
+        const txid = await txDb.transactions.create({
+          data: {
+            from,
+            to,
+            amount,
+            date: new Date(),
+          },
+          select: {
+            id: true,
+          },
+        });
+        return res.status(200).json({ message: "Transfer successful", txid });
+      });
+    } catch (error) {
+      console.log("Transfer failed", error);
+      return res
+        .status(400)
+        .json({ error: "Something wrong with user account or server" });
+    }
   } catch (error) {
     console.log("Transfer failed", error);
     return res
