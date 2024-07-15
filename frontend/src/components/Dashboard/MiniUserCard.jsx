@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import userImg from "../../assets/user.png";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 
@@ -19,7 +18,6 @@ function MiniUserCard({ firstName, lastName, id }) {
             {lastName[0]}
           </AvatarFallback>
         </Avatar>
-        {/* <img src={userImg} alt="default pic" className="h-8 self-center" /> */}
         <h3 className="self-center ml-2">
           {firstName} {lastName}
         </h3>
@@ -30,7 +28,7 @@ function MiniUserCard({ firstName, lastName, id }) {
         onClick={handleSendPage}
       >
         Send
-      </Button>
+      </Button>{" "}
     </div>
   );
 }

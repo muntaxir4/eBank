@@ -19,6 +19,7 @@ async function Authenticate({ formEvent, type }) {
     return response.data;
   } catch (error) {
     console.log("Error", error);
+    if (!error.response) return { error: "Server might be busy." };
     return { error: error.response.data.error ?? "Invalid Credentials" };
   }
 }

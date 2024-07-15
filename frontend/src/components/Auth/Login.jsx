@@ -34,12 +34,12 @@ function Login() {
       if (data.error.name == "ZodError") {
         return toast({
           variant: "destructive",
-          description: "Invalid Credentials",
+          description: "Error: Password criteria mismatch.",
         });
       }
       return toast({
         variant: "destructive",
-        description: JSON.stringify(data.error),
+        description: "Error:" + JSON.stringify(data.error),
       });
     }
     localStorage.setItem("token", data.token);

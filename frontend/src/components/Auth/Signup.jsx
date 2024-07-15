@@ -41,12 +41,12 @@ function Signup() {
       if (data.error.name == "ZodError") {
         return toast({
           variant: "destructive",
-          description: "Check Input Fields again",
+          description: "Error: Check Input Fields again",
         });
       }
       return toast({
         variant: "destructive",
-        description: JSON.stringify(data.error),
+        description: "Error:" + JSON.stringify(data.error),
       });
     }
     localStorage.setItem("token", data.token);
